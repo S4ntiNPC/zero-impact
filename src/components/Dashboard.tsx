@@ -125,6 +125,14 @@ export default function Dashboard({ refreshTrigger }: { refreshTrigger: number }
   const lineOptions: any = {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 10,  // Un poco de aire a la izquierda (Enero)
+        right: 30, // BASTANTE aire a la derecha para que quepa el tooltip de Diciembre
+        top: 30,   // Aire arriba por si el valor es muy alto
+        bottom: 10 // Un poco abajo
+      }
+    },
     animation: {
         y: {
             duration: 2000,
@@ -139,7 +147,7 @@ export default function Dashboard({ refreshTrigger }: { refreshTrigger: number }
         },
     },
     plugins: {
-      legend: { position: 'top', align: 'end', labels: { usePointStyle: true, boxWidth: 8 } },
+      legend: { position: 'top', align: 'end', labels: { usePointStyle: true, boxWidth: 10 } },
       title: { display: false },
     },
     scales: {
@@ -159,15 +167,27 @@ export default function Dashboard({ refreshTrigger }: { refreshTrigger: number }
   };
 
   // SOLUCIÓN: Agregamos ': any' aquí también
-  const doughnutOptions: any = {
-    cutout: '60%',
-    plugins: { legend: { display: false } },
+  // SOLUCIÓN: Agregamos padding para que el efecto de "Zoom" no se corte
+const doughnutOptions: any = {
+    cutout: '60%', // Un poco más fina para que se vea elegante
+    layout: {
+      padding: 20 // Colchón de seguridad
+    },
+    plugins: { 
+      legend: { display: false },
+      tooltip: { 
+        yAlign: 'bottom', // Fuerza al tooltip a salir hacia arriba o abajo, no a los lados
+        displayColors: true,
+      }
+    },
     animation: {
       animateScale: true,
       animateRotate: true,
       duration: 2000,
       easing: 'easeOutBounce'
-    }
+    },
+    // CAMBIO CLAVE: Reducimos cuánto "salta" la dona hacia afuera
+    hoverOffset: 5 
   };
 
   return (
@@ -180,7 +200,7 @@ export default function Dashboard({ refreshTrigger }: { refreshTrigger: number }
       <div className="p-6 grid lg:grid-cols-3 gap-8">
         
         {/* Gráfica de Línea */}
-        <div className="lg:col-span-2 h-80 relative">
+        <div className="lg:col-span-2 h-full min-h-[400px] relative">          
            <Line options={lineOptions} data={lineChartData} />
         </div>
 
@@ -191,7 +211,7 @@ export default function Dashboard({ refreshTrigger }: { refreshTrigger: number }
             <div className="text-3xl font-bold text-slate-800 my-2">
               {(metrics.total / 1000).toFixed(2)} <span className="text-sm text-gray-500 font-normal">tnCO2eq</span>
             </div>
-            <div className="w-32 h-32 mx-auto mt-4">
+            <div className="w-48 h-48 mx-auto mt-4">
                {metrics.total === 0 ? (
                  <div className="h-full flex items-center justify-center text-xs text-gray-400">Sin datos</div>
                ) : (
