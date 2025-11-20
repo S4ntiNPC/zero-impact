@@ -18,7 +18,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ success: false, error: "No autorizado" }, { status: 401 });
     }
 
-    const activities = await Activity.find({ userId: user._id }).sort({ date: -1 });
+    const activities = await Activity.find({ userId: user._id }).sort({ date: -1, _id: -1 }).limit(50);
 
     const breakdown: Record<string, number> = {};
     activities.forEach((act) => {
