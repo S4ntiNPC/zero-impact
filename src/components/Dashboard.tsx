@@ -121,23 +121,15 @@ export default function Dashboard({ refreshTrigger }: { refreshTrigger: number }
     ],
   };
 
-  // SOLUCIÓN: Agregamos ': any' para evitar conflictos de tipos
+// SOLUCIÓN: Agregamos ': any' y configuramos títulos y unidades
   const lineOptions: any = {
     responsive: true,
     maintainAspectRatio: false,
     layout: {
-      padding: {
-        left: 10,  // Un poco de aire a la izquierda (Enero)
-        right: 30, // BASTANTE aire a la derecha para que quepa el tooltip de Diciembre
-        top: 30,   // Aire arriba por si el valor es muy alto
-        bottom: 10 // Un poco abajo
-      }
+      padding: { left: 20, right: 50, top: 50, bottom: 10 }
     },
     animation: {
-        y: {
-            duration: 2000,
-            from: 500
-        },
+        y: { duration: 2000, from: 500 },
         delay: (context: any) => {
             let delay = 0;
             if (context.type === 'data' && context.mode === 'default') {
@@ -149,9 +141,29 @@ export default function Dashboard({ refreshTrigger }: { refreshTrigger: number }
     plugins: {
       legend: { position: 'top', align: 'end', labels: { usePointStyle: true, boxWidth: 10 } },
       title: { display: false },
+      // CONFIGURACIÓN TOOLTIP (Cuadro negro al pasar mouse)
+      tooltip: {
+        usePointStyle: true,
+        callbacks: {
+            // Agregamos 'kg CO2eq' al final del número
+            label: function(context: any) {
+                return ` ${context.dataset.label}: ${context.parsed.y} kg CO2eq`;
+            }
+        }
+      }
     },
     scales: {
-      y: { beginAtZero: true, grid: { color: '#f3f4f6' } },
+      y: { 
+        beginAtZero: true, 
+        grid: { color: '#f3f4f6' },
+        // TÍTULO DEL EJE Y
+        title: {
+          display: true,
+          text: 'Emisiones (kg CO2eq)',
+          color: '#9ca3af', // un gris suave
+          font: { size: 11, weight: 'bold' }
+        }
+      },
       x: { grid: { display: false } }
     }
   };
