@@ -18,6 +18,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    
     // Contar actividades actuales (para la lógica de caché/UI)
     const currentCount = await Activity.countDocuments({ userId: user._id });
 

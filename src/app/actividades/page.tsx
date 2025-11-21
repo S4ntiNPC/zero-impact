@@ -58,7 +58,7 @@ export default function ActividadesPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-green-900">🌿 Registro de Actividades</h1>
+        <h1 className="text-3xl font-bold text-green-900"> Registro de Actividades</h1>
         <p className="text-gray-600">Registra, edita o elimina tus acciones para mantener tu huella al día.</p>
       </div>
 
