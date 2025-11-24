@@ -45,7 +45,7 @@ export async function GET() {
       return NextResponse.json({ tips: [{ title: "Empieza hoy", description: "Registra una actividad.", category: "General" }] });
     }
 
-    // Llamada a la IA (GEMINI FLASH 1.5)
+    // Llamada a la IA (GEMINI FLASH 3.0)
     const prompt = `
       Eres experto ambiental. Analiza: ${JSON.stringify(summary)}. Hábitos: ${detailedHabits.slice(0, 20).join(', ')}.
       Genera 4 consejos breves JSON: [{"title": "...", "description": "...", "category": "..."}].
@@ -62,7 +62,6 @@ export async function GET() {
     });
 
     if (!response.ok) throw new Error(`API Error: ${response.status}`);
-
     const data = await response.json();
     const cleanJson = (data.candidates?.[0]?.content?.parts?.[0]?.text || "").replace(/```json|```/g, '').trim();
     
@@ -87,7 +86,7 @@ export async function GET() {
     // 3. Ahora 'user' SÍ existe aquí porque lo declaramos afuera
     const safeUser = user as any;
 
-    // Si la IA falla pero tenemos caché viejo, lo usamos
+    // Si la IA falla, pero tenemos caché viejo, lo usamos
     if (safeUser && safeUser.cachedTips && safeUser.cachedTips.length > 0) {
       return NextResponse.json({ tips: safeUser.cachedTips });
     }

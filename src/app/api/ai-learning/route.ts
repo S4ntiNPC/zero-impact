@@ -57,7 +57,7 @@ export async function GET() {
       return NextResponse.json({ resources: FALLBACK_RESOURCES, category: "General" });
     }
 
-    // 3. LLAMADA A LA IA (GEMINI FLASH 1.5)
+    // 3. LLAMADA A LA IA (GEMINI FLASH 3.0)
     const prompt = `
       Actúa como un profesor de ecología. El usuario tiene una huella de carbono alta en: ${maxCategory}.
       Recomienda 3 recursos educativos ESPECÍFICOS (Documentales famosos, Libros, Artículos virales).

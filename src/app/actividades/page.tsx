@@ -87,6 +87,7 @@ export default function ActividadesPage() {
                     <span className="text-2xl bg-gray-100 p-2 rounded-full">
                       {act.category === 'Transporte' ? '🚗' : 
                        act.category === 'Alimentación' ? '🥩' : 
+                       act.category === 'Consumo' ? '🛍️' :
                        act.category === 'Energía' ? '⚡' : '🌿'}
                     </span>
                     <div>

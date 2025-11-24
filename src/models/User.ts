@@ -7,18 +7,18 @@ const UserSchema = new Schema({
   name: String,
   totalCarbonFootprint: { type: Number, default: 0 },
   badges: { type: [String], default: [] },
-  createdAt: { type: Date, default: Date.now },
-
-  // --- NUEVOS CAMPOS PARA CACHÉ (MEMORIA IA) ---
   
-  // 1. Memoria para Consejos
-  cachedTips: { type: [Schema.Types.Mixed], default: [] }, // Guardamos los consejos aquí
-  tipsVersion: { type: Number, default: -1 }, // Guardamos cuántas actividades tenías la última vez
+  // --- NUEVOS CAMPOS PARA ECO-AMIGOS ---
+  friendCode: { type: String, unique: true, sparse: true }, // El código para compartir (ej: "ANA-832")
+  friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],  // Lista de personas que sigo
+  // -------------------------------------
 
-  // 2. Memoria para Educación
-  cachedResources: { type: [Schema.Types.Mixed], default: [] }, // Guardamos los recursos aquí
-  cachedResCategory: { type: String, default: '' }, // Guardamos la categoría detectada
-  learningVersion: { type: Number, default: -1 }, // Guardamos cuántas actividades tenías
+  cachedTips: { type: [Schema.Types.Mixed], default: [] },
+  tipsVersion: { type: Number, default: -1 },
+  cachedResources: { type: [Schema.Types.Mixed], default: [] },
+  cachedResCategory: { type: String, default: '' },
+  learningVersion: { type: Number, default: -1 },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const User = models.User || model('User', UserSchema);

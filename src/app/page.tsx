@@ -27,7 +27,7 @@ export default function Home() {
           <div>
             <h1 className="text-3xl font-bold text-slate-800">
               {/* 3. Lógica dinámica: Si cargó y hay usuario, muestra su nombre. Si no, "Usuario" */}
-              Hola, {isLoaded && user ? user.firstName : 'Usuario'} 
+              Hola, {isLoaded && user ? user.firstName : 'Usuario' } 
             </h1>
             <p className="text-gray-500 mt-1">Aquí está tu resumen de impacto ambiental de hoy.</p>
           </div>
